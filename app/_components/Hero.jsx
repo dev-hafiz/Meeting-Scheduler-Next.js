@@ -32,7 +32,7 @@ const Hero = () => {
           className="h-[100px] object-cover rounded-full absolute right-16 bottom-32"
         />
       </div>
-      <div className="text-center max-w-3xl">
+      <div className="mt-5 md:mt-20 text-center max-w-3xl">
         <h2 className="font-bold text-[60px] text-slate-700">
           Easy scheduling ahead
         </h2>
