@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
+import Header from "./_components/Header";
 
 export default function Home() {
   return (
     <div>
-      <h1>Meeting App</h1>
-      <Button variant="destructive">Add Now</Button>
+      <Header />
     </div>
   );
 }
