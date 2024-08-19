@@ -4,10 +4,10 @@ import SideNavBar from "./_components/SideNavBar";
 const DashboardLayout = ({ children }) => {
   return (
     <div>
-      <div className="w-64 bg-slate-100 h-screen">
+      <div className="hidden md:block md:w-64 bg-slate-50 h-screen fixed">
         <SideNavBar />
       </div>
-      <div>{children}</div>
+      <div className="md:ml-64">{children}</div>
     </div>
   );
 };
