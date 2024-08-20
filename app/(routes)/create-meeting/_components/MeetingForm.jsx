@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +14,23 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeOptions from "@/app/_utils/ThemeOptions";
 
-const MeetingForm = () => {
+const MeetingForm = ({ setFormValue }) => {
   const [location, setLocation] = useState();
   const [themeColor, setThemeColor] = useState();
   const [eventName, setEventName] = useState();
   const [duration, setDuration] = useState(30);
   const [locationType, setLocationType] = useState();
   const [locationUrl, setLocationUrl] = useState();
+
+  useEffect(() => {
+    setFormValue({
+      eventName: eventName,
+      duration: duration,
+      locationType: locationType,
+      locationUrl: locationUrl,
+      themeColor: themeColor,
+    });
+  }, [themeColor, eventName, duration, locationType, locationUrl]);
 
   return (
     <div className="p-8">
@@ -72,7 +82,7 @@ const MeetingForm = () => {
               className={`
               border flex flex-col justify-center items-center p-3 rounded-lg
               cursor-pointer hover:bg-blue-100 
-              ${location === option.name && "bg-blue-100 border-blue-500"}
+              ${locationType === option.name && "bg-blue-100 border-blue-500"}
               `}
             >
               <Image
@@ -88,7 +98,7 @@ const MeetingForm = () => {
 
         {locationType && (
           <div>
-            <h2 className="font-bold">Add {location} Url *</h2>
+            <h2 className="font-bold">Add {locationType} Url *</h2>
             <Input
               placeholder="Add url"
               onChange={(event) => setLocationUrl(event.target.value)}
