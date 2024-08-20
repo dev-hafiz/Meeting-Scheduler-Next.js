@@ -15,6 +15,7 @@ import Link from "next/link";
 import ThemeOptions from "@/app/_utils/ThemeOptions";
 
 const MeetingForm = () => {
+  const [location, setLocation] = useState();
   const [themeColor, setThemeColor] = useState();
   const [eventName, setEventName] = useState();
   const [duration, setDuration] = useState(30);
@@ -71,7 +72,7 @@ const MeetingForm = () => {
               className={`
               border flex flex-col justify-center items-center p-3 rounded-lg
               cursor-pointer hover:bg-blue-100 
-              ${locationType === option.name && "bg-blue-100 border-blue-500"}
+              ${location === option.name && "bg-blue-100 border-blue-500"}
               `}
             >
               <Image
@@ -87,7 +88,7 @@ const MeetingForm = () => {
 
         {locationType && (
           <div>
-            <h2 className="font-bold">Add {locationType} Url *</h2>
+            <h2 className="font-bold">Add {location} Url *</h2>
             <Input
               placeholder="Add url"
               onChange={(event) => setLocationUrl(event.target.value)}
