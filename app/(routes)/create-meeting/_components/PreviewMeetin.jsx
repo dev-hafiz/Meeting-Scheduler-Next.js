@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Clock, MapPin } from "lucide-react";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import React, { useEffect, useState } from "react";
 
 const PreviewMeetin = ({ formValue }) => {
   const [date, setDate] = useState(new Date());
+  const [timeSlots, setTimeSlots] = useState();
 
   useEffect(() => {
     formValue?.duration && createTimeSlot(formValue?.duration);
@@ -28,12 +30,14 @@ const PreviewMeetin = ({ formValue }) => {
       ).padStart(2, "0")} ${period}`;
     });
 
-    // setTimeSlots(slots);
-    console.log(slots);
+    setTimeSlots(slots);
   };
 
   return (
-    <div className="p-5 py-10 shadow-lg m-5 border-t-8">
+    <div
+      className="p-5 py-10 shadow-lg m-5 border-t-8"
+      style={{ borderTopColor: formValue?.themeColor }}
+    >
       <Image src="/logo.png" width={100} height={100} alt="logo" />
       <div className="grid grid-cols-1 md:grid-cols-3 mt-5">
         {/* Meeting Info  */}
@@ -67,7 +71,22 @@ const PreviewMeetin = ({ formValue }) => {
               selected={date}
               onSelect={setDate}
               className="rounded-md border mt-5"
+              disabled={(date) => date <= new Date()}
             />
+          </div>
+          <div
+            className="flex flex-col w-full overflow-auto gap-4 p-5"
+            style={{ maxHeight: "400px" }}
+          >
+            {timeSlots?.map((time, index) => (
+              <Button
+                key={index}
+                className="text-primary border-primary"
+                variant="outline"
+              >
+                {time}
+              </Button>
+            ))}
           </div>
         </div>
       </div>
