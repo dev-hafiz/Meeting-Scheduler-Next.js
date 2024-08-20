@@ -78,6 +78,7 @@ const MeetingForm = ({ setFormValue }) => {
         <div className="grid grid-cols-4 gap-3">
           {LocationOption.map((option, index) => (
             <div
+              key={index}
               onClick={() => setLocationType(option.name)}
               className={`
               border flex flex-col justify-center items-center p-3 rounded-lg
