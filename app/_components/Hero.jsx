@@ -42,15 +42,23 @@ const Hero = () => {
         </h2>
       </div>
       <div className="flex w-full flex-col gap-4 mt-5 mx-5 md:mx-0 text-center">
-        <h3 className="text-sm">Sign Up for with Google and Facebook </h3>
-        <div className="flex justify-center gap-8">
-          <Button className="p-7 flex gap-4">
-            <Image src="/google.png" alt="google" width={40} height={40} />
-            Sign up with Google
+        <h3 className="text-sm">
+          Sign Up for with Linkedin, Facebook and Google
+        </h3>
+        <div className="flex justify-center gap-8 mt-3">
+          <Button className="px-5 py-6 flex gap-4 w-[120px] rounded-lg bg-[#F5F5F5] hover:bg-[#EBEBEB]">
+            <Image src="/socialIn.png" alt="google" width={25} height={25} />
           </Button>
-          <Button className="p-7 flex gap-4">
-            <Image src="/facebook.png" alt="google" width={40} height={40} />
-            Sign up with Facebook
+          <Button className="px-5 py-6 flex gap-4 w-[120px] rounded-lg bg-[#F5F5F5] hover:bg-[#EBEBEB]">
+            <Image src="/socialFb.png" alt="google" width={25} height={25} />
+          </Button>
+          <Button className="px-5 py-6 flex gap-4 w-[120px] rounded-lg bg-[#F5F5F5] hover:bg-[#EBEBEB]">
+            <Image
+              src="/socialGoogle.png"
+              alt="google"
+              width={25}
+              height={25}
+            />
           </Button>
         </div>
         <hr className="w-2/4 mx-auto mt-2" />
