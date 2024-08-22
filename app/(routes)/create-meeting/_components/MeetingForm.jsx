@@ -17,15 +17,17 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const MeetingForm = ({ setFormValue }) => {
   const { user } = useKindeBrowserClient();
-  const [location, setLocation] = useState();
   const [themeColor, setThemeColor] = useState();
   const [eventName, setEventName] = useState();
   const [duration, setDuration] = useState(30);
   const [locationType, setLocationType] = useState();
   const [locationUrl, setLocationUrl] = useState();
+
+  const router = useRouter();
 
   const db = getFirestore(app);
 
@@ -48,9 +50,11 @@ const MeetingForm = ({ setFormValue }) => {
       locationType: locationType,
       locationUrl: locationUrl,
       themeColor: themeColor,
-      businessid: "Business/" + user?.email,
+      createdBy: user?.email,
+      businessId: doc(db, "Business", user?.email),
     }).then((resp) => {
       toast("New Meeting Event Created!");
+      router.replace("/dashboard/meeting-type");
     });
   };
 
