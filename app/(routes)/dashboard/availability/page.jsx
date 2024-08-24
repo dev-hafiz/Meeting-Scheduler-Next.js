@@ -4,22 +4,90 @@ import DaysList from "@/app/_utils/DaysList";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { app } from "@/config/FirebaseConfig";
+import React, { useEffect, useState } from "react";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
 
 const Availability = () => {
-  const [daysAvailable, setDaysAvaiable] = useState([]);
+  const [daysAvailable, setDaysAvailable] = useState([
+    {
+      Sunday: false,
+    },
+    {
+      Monday: false,
+    },
+    {
+      Tuesday: false,
+    },
+    {
+      Wednesday: false,
+    },
+    {
+      Thrusday: false,
+    },
+    {
+      Friday: false,
+    },
+    {
+      Saturday: false,
+    },
+  ]);
   const [startTime, setStartTime] = useState();
-  const [endtTime, setEndTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const { user } = useKindeBrowserClient();
+
+  //firebase database
+  const db = getFirestore(app);
 
   const onHandleChange = (day, value) => {
-    setDaysAvaiable({
+    setDaysAvailable({
       ...daysAvailable,
       [day]: value,
     });
   };
 
-  const handleSave = () => {
-    console.log(daysAvailable, startTime, endtTime);
+  useEffect(() => {
+    user && getBusinessInfo();
+  }, [user]);
+
+  //Get Business info from BD
+  const getBusinessInfo = async () => {
+    // const docRef = (db, "Business", user?.email);
+    // const docSnap = await getDoc(docRef);
+    // const result = docSnap.data();
+    // setDaysAvaiable(result.daysAvailable);
+
+    try {
+      const docRef = doc(db, "Business", user?.email); // Corrected line
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const result = docSnap.data();
+        setDaysAvailable(result.daysAvailable);
+        setStartTime(result.startTime);
+        setEndTime(result.endTime);
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
+    }
+  };
+
+  //Send Business Info In DB
+  const handleSave = async () => {
+    console.log(daysAvailable, startTime, endTime);
+    const docRef = doc(db, "Business", user?.email);
+
+    await updateDoc(docRef, {
+      daysAvailable: daysAvailable,
+      startTime: startTime,
+      endTime: endTime,
+    }).then((resp) => {
+      toast("Availability Updated !");
+    });
   };
 
   return (
@@ -33,6 +101,9 @@ const Availability = () => {
             <div key={index}>
               <h2>
                 <Checkbox
+                  checked={
+                    daysAvailable[item?.day] ? daysAvailable[item.day] : false
+                  }
                   onCheckedChange={(e) => onHandleChange(item?.day, e)}
                 />{" "}
                 {item?.day}
@@ -46,11 +117,19 @@ const Availability = () => {
         <div className="flex items-center gap-10">
           <div className="mt-3">
             <h2>Start Time</h2>
-            <Input type="time" onChange={(e) => setStartTime(e.target.value)} />
+            <Input
+              type="time"
+              defaultValue={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            />
           </div>
           <div className="mt-3">
             <h2>End Time</h2>
-            <Input type="time" onChange={(e) => setEndTime(e.target.value)} />
+            <Input
+              type="time"
+              defaultValue={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+            />
           </div>
         </div>
       </div>
