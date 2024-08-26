@@ -8,6 +8,7 @@ import {
   orderBy,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
 import React, { useEffect, useState } from "react";
@@ -24,6 +25,7 @@ import {
 
 const MeetingEventList = () => {
   const [eventList, setEventList] = useState([]);
+  const [businessInfo, setBusinessInfo] = useState();
 
   const { user } = useKindeBrowserClient();
   //Get Data From Firebase
@@ -31,6 +33,7 @@ const MeetingEventList = () => {
 
   useEffect(() => {
     user && getEventList();
+    user && BusinessInfo();
   }, [user]);
 
   const getEventList = async () => {
@@ -49,11 +52,29 @@ const MeetingEventList = () => {
     });
   };
 
+  // Get Business data from db
+  const BusinessInfo = async () => {
+    const docRef = doc(db, "Business", user?.email);
+    const docSnap = await getDoc(docRef);
+    setBusinessInfo(docSnap.data());
+  };
+
   const onDeleteMeetingEvent = async (event) => {
     await deleteDoc(doc(db, "MeetingEvent", event?.id)).then((resp) => {
       toast("Meeting Event Deleted!");
       getEventList();
     });
+  };
+
+  const onCopyClickHandler = (event) => {
+    const meetingEventUrl =
+      process.env.NEXT_PUBLIC_BASE_URL +
+      "/" +
+      businessInfo.businessName +
+      "/" +
+      event.id;
+    navigator.clipboard.writeText(meetingEventUrl);
+    toast("Copied on Clicpboard");
   };
   return (
     <div className="mt-10 gap-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -97,8 +118,7 @@ const MeetingEventList = () => {
                 className="flex gap-2 text-sm items-center text-primary 
               cursor-pointer"
                 onClick={() => {
-                  navigator.clipboard.writeText(event?.locationUrl);
-                  toast("Copied on Clicpboard");
+                  onCopyClickHandler(event);
                 }}
               >
                 <Copy className="h-4 w-4" /> Copy Link

@@ -1,9 +1,5 @@
 "use client";
-
-import {
-  LogoutLink,
-  useKindeBrowserClient,
-} from "@kinde-oss/kinde-auth-nextjs";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
@@ -25,11 +21,11 @@ const Dashboard = () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       setLoading(false);
     } else {
       // docSnap.data() will be undefined in this case
-      console.log("No such document!");
+      // console.log("No such document!");
       setLoading(false);
       router.replace("/create-business");
     }
