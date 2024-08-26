@@ -6,7 +6,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import TimeDateSelection from "./TimeDateSelection";
 import UserFormInfo from "./UserFormInfo";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -18,6 +26,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
   const [userNote, setUserNote] = useState("");
+  const [prevBooking, setPrevBooking] = useState([]);
   const [step, setStep] = useState(1);
   const db = getFirestore(app);
   const [loading, setLoading] = useState(false);
@@ -47,6 +56,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
     setDate(date);
     const day = format(date, "EEEE");
     if (businessInfo?.daysAvailable?.[day]) {
+      getPrevEventBooking(date);
       setEnabledTimeSlot(true);
     } else {
       setEnabledTimeSlot(false);
@@ -77,6 +87,23 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
       userNote: userNote,
     }).then((resp) => {
       toast("Meeting Scheduled successfully!");
+    });
+  };
+
+  //* Used to fatch Previous Booking for given event
+
+  const getPrevEventBooking = async (date_) => {
+    const q = query(
+      collection(db, "ScheduledMeetings"),
+      where("selectedDate", "==", date_),
+      where("eventId", "==", eventInfo.id)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      // console.log("-->", doc.data());
+      setPrevBooking((prev) => [...prev, doc.data()]);
     });
   };
   return (
@@ -133,6 +160,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
             setSelectedTime={setSelectedTime}
             timeSlots={timeSlots}
             selectedTime={selectedTime}
+            prevBooking={prevBooking}
           />
         ) : (
           <UserFormInfo

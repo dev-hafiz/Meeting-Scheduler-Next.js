@@ -9,7 +9,12 @@ const TimeDateSelection = ({
   setSelectedTime,
   enableTimeSlot,
   selectedTime,
+  prevBooking,
 }) => {
+  const checkTimeSlot = (time) => {
+    return prevBooking.filter((item) => item.selectedTime == time).length > 0;
+  };
+
   return (
     <div className="md:col-span-2 flex px-4">
       <div className="flex flex-col">
@@ -28,7 +33,7 @@ const TimeDateSelection = ({
       >
         {timeSlots?.map((time, index) => (
           <Button
-            disabled={!enableTimeSlot}
+            disabled={!enableTimeSlot || checkTimeSlot(time)}
             key={index}
             onClick={() => setSelectedTime(time)}
             className={`text-primary border-primary
