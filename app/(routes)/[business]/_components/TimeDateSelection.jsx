@@ -8,6 +8,7 @@ const TimeDateSelection = ({
   timeSlots,
   setSelectedTime,
   enableTimeSlot,
+  selectedTime,
 }) => {
   return (
     <div className="md:col-span-2 flex px-4">
@@ -30,7 +31,9 @@ const TimeDateSelection = ({
             disabled={!enableTimeSlot}
             key={index}
             onClick={() => setSelectedTime(time)}
-            className="text-primary border-primary"
+            className={`text-primary border-primary
+            ${time == selectedTime && "bg-primary text-white"}
+            `}
             variant="outline"
           >
             {time}
