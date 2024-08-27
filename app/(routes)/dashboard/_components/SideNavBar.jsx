@@ -18,7 +18,7 @@ const SideNavBar = () => {
     {
       id: 2,
       name: "Scheduled Metting",
-      path: "/dashboard/scheduled-metting",
+      path: "/dashboard/scheduled-meeting",
       icon: Calendar,
     },
     {
