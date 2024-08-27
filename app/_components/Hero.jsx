@@ -5,7 +5,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col justify-center items-center my-20">
+    <div className=" flex flex-col justify-center items-center my-20">
       <div className="hidden lg:block">
         <Image
           src="/profile1.jpg"

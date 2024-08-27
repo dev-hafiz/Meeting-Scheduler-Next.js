@@ -7,13 +7,13 @@ import React from "react";
 const Header = () => {
   return (
     <div>
-      <div className="flex items-center justify-between px-5 py-3 shadow-sm">
+      <div className="flex items-center justify-between md:px-36 px-5  py-3 shadow-sm">
         <Image
           src="/logo.png"
-          width={100}
-          height={100}
+          width={200}
+          height={150}
           alt="logo"
-          className="w-[100px] md:w-[110px]"
+          className="w-[150px] md:w-[200px]"
         />
         <ul className="hidden md:flex gap-14 font-medium text-lg">
           <li className="hover:text-primary transition-all duration-300 cursor-pointer">
