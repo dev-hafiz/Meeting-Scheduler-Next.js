@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { CalendarCheck, Clock, LoaderIcon, MapPin, Timer } from "lucide-react";
+import { CalendarCheck, Clock, MapPin, Timer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import TimeDateSelection from "./TimeDateSelection";
 import UserFormInfo from "./UserFormInfo";
+import ReactDOMServer from "react-dom/server";
 import {
   collection,
   doc,
@@ -17,7 +18,11 @@ import {
 } from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
 import { toast } from "sonner";
+import Plunk from "@plunk/node";
+import { render } from "@react-email/components";
+import Email from "@/emails";
 import { useRouter } from "next/navigation";
+
 function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
   const [date, setDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState();
@@ -28,7 +33,11 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
   const [userNote, setUserNote] = useState("");
   const [prevBooking, setPrevBooking] = useState([]);
   const [step, setStep] = useState(1);
+  const router = useRouter();
   const db = getFirestore(app);
+
+  const plunk = new Plunk(process.env.NEXT_PUBLIC_PLUNK_API_KEY);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     eventInfo?.duration && createTimeSlot(eventInfo?.duration);
@@ -87,7 +96,36 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
       userNote: userNote,
     }).then((resp) => {
       toast("Meeting Scheduled successfully!");
+      sendEmail(userName);
     });
+  };
+
+  const sendEmail = (user) => {
+    const emailHtml = ReactDOMServer.renderToStaticMarkup(
+      <Email
+        businessName={businessInfo?.businessName}
+        date={
+          date instanceof Date && !isNaN(date)
+            ? format(date, "PPP")
+            : "Invalid date"
+        }
+        duration={eventInfo?.duration}
+        meetingTime={selectedTime}
+        meetingUrl={eventInfo?.locationUrl}
+        userFirstName={user}
+      />
+    );
+
+    plunk.emails
+      .send({
+        to: userEmail,
+        subject: `Hi ${user}, here is your meeting schedule`,
+        body: emailHtml,
+      })
+      .then((resp) => {
+        console.log(resp);
+        router.replace("/confirmation");
+      });
   };
 
   //* Used to fatch Previous Booking for given event
@@ -106,6 +144,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
       setPrevBooking((prev) => [...prev, doc.data()]);
     });
   };
+
   return (
     <div
       className="p-5 py-10 shadow-lg m-5 border-t-8
