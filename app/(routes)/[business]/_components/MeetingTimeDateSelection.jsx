@@ -62,8 +62,19 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
   };
 
   const handleDateChange = (date) => {
+    // Validate the date to ensure it's a valid Date object
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      console.error("Invalid date passed to handleDateChange:", date);
+      setEnabledTimeSlot(false); // Disable time slots if the date is invalid
+      return;
+    }
+
     setDate(date);
+
+    // Format the date to get the day of the week
     const day = format(date, "EEEE");
+
+    // Check if the selected day is available in businessInfo
     if (businessInfo?.daysAvailable?.[day]) {
       getPrevEventBooking(date);
       setEnabledTimeSlot(true);
@@ -173,7 +184,9 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
             </h2>
             <h2 className="flex gap-2">
               <CalendarCheck />
-              {format(date, "PPP")}{" "}
+              {date instanceof Date && !isNaN(date.getTime())
+                ? format(date, "PPP")
+                : "Invalid date"}
             </h2>
             {selectedTime && (
               <h2 className="flex gap-2">
