@@ -31,8 +31,8 @@ const CreateBusiness = () => {
     <div className="flex flex-col items-center p-14 gap-20 my-10">
       <Image
         src="/logo.png"
-        width={100}
-        height={100}
+        width={150}
+        height={150}
         alt="logo"
         className="w-[100px] md:w-[110px]"
       />
