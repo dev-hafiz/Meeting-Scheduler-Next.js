@@ -45,7 +45,7 @@ const SideNavBar = () => {
   return (
     <div className="p-5 py-14">
       <div className="flex justify-center">
-        <Image src="/logo.png" alt="logo" width={100} height={100} />
+        <Image src="/logo.png" alt="logo" width={150} height={150} />
       </div>
       <Link href={"/create-meeting"}>
         <Button className="flex gap-2 w-full rounded-full mt-7">

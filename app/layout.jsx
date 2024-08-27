@@ -6,7 +6,7 @@ const inter = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Calenda",
-  description: "Your Trusted Meeting Application",
+  description: "Your Trusted Schedule Application",
 };
 
 export default function RootLayout({ children }) {
