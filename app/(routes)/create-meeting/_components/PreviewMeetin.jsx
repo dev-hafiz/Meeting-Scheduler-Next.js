@@ -38,7 +38,15 @@ const PreviewMeetin = ({ formValue }) => {
       className="p-5 py-10 shadow-lg m-5 border-t-8"
       style={{ borderTopColor: formValue?.themeColor }}
     >
-      <Image src="/logo.png" width={100} height={100} alt="logo" />
+      <Link href="/">
+        <Image
+          src="/logo.png"
+          className="w-[120px] md:w-[180px]"
+          width={100}
+          height={100}
+          alt="logo"
+        />
+      </Link>
       <div className="grid grid-cols-1 md:grid-cols-3 mt-5">
         {/* Meeting Info  */}
         <div className="p-4 border-r">

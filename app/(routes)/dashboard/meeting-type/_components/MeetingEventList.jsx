@@ -22,6 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import LoadingSpinner from "@/app/_components/LoadingSpinner";
 
 const MeetingEventList = () => {
   const [eventList, setEventList] = useState([]);
@@ -91,9 +92,6 @@ const MeetingEventList = () => {
                   <Settings className=" cursor-pointer" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mr-16">
-                  <DropdownMenuItem className="flex items-center gap-2">
-                    <Pen /> Edit
-                  </DropdownMenuItem>
                   <DropdownMenuItem
                     className="flex items-center gap-2"
                     onClick={() => onDeleteMeetingEvent(event)}
@@ -133,7 +131,7 @@ const MeetingEventList = () => {
           </div>
         ))
       ) : (
-        <h2>Loading...</h2>
+        <LoadingSpinner />
       )}
     </div>
   );

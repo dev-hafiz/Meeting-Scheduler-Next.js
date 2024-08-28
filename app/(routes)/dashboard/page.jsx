@@ -5,6 +5,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { app } from "@/config/FirebaseConfig";
 import { useRouter } from "next/navigation";
 import MeetingType from "./meeting-type/page";
+import LoadingSpinner from "@/app/_components/LoadingSpinner";
 
 const Dashboard = () => {
   const db = getFirestore(app);
@@ -32,7 +33,7 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <LoadingSpinner />;
   }
 
   return (

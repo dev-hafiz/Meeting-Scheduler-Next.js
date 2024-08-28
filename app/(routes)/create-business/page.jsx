@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CreateBusiness = () => {
   const [businessName, setBusinessName] = useState();
@@ -29,13 +30,15 @@ const CreateBusiness = () => {
   };
   return (
     <div className="flex flex-col items-center p-14 gap-20 my-10">
-      <Image
-        src="/logo.png"
-        width={150}
-        height={150}
-        alt="logo"
-        className="w-[100px] md:w-[110px]"
-      />
+      <Link href="/">
+        <Image
+          src="/logo.png"
+          width={100}
+          height={100}
+          alt="logo"
+          className="w-[150px] md:w-[200px]"
+        />
+      </Link>
       <div className="flex flex-col items-center gap-4 max-w-3xl ">
         <h2 className="text-4xl font-bold">
           What should we call your business?
