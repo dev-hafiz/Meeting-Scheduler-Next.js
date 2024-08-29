@@ -66,9 +66,9 @@ const Availability = () => {
 
       if (docSnap.exists()) {
         const result = docSnap.data();
-        setDaysAvailable(result.daysAvailable);
-        setStartTime(result.startTime);
-        setEndTime(result.endTime);
+        setDaysAvailable(result?.daysAvailable);
+        setStartTime(result?.startTime);
+        setEndTime(result?.endTime);
       } else {
         console.log("No such document!");
       }
