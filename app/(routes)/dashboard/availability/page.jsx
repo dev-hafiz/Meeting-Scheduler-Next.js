@@ -103,7 +103,11 @@ const Availability = () => {
               <h2>
                 <Checkbox
                   checked={
-                    daysAvailable[item?.day] ? daysAvailable[item?.day] : false
+                    item?.day &&
+                    daysAvailable &&
+                    daysAvailable[item.day] !== undefined
+                      ? daysAvailable[item.day]
+                      : false
                   }
                   onCheckedChange={(e) => onHandleChange(item?.day, e)}
                 />{" "}
