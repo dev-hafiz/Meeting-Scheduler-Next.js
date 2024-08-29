@@ -23,7 +23,7 @@ const CreateBusiness = () => {
       email: user.email,
       userName: user.given_name + " " + user.family_name,
     }).then((resp) => {
-      console.log("Document Save");
+      // console.log("Document Save");
       toast("New Business Created!");
       router.replace("/dashboard");
     });

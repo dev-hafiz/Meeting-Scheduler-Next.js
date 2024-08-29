@@ -78,7 +78,7 @@ const Availability = () => {
 
   //Send Business Info In DB
   const handleSave = async () => {
-    console.log(daysAvailable, startTime, endTime);
+    // console.log(daysAvailable, startTime, endTime);
     const docRef = doc(db, "Business", user?.email);
 
     await updateDoc(docRef, {
@@ -102,7 +102,7 @@ const Availability = () => {
               <h2>
                 <Checkbox
                   checked={
-                    daysAvailable[item?.day] ? daysAvailable[item.day] : false
+                    daysAvailable[item?.day] ? daysAvailable[item?.day] : false
                   }
                   onCheckedChange={(e) => onHandleChange(item?.day, e)}
                 />{" "}

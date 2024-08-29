@@ -57,7 +57,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
       ).padStart(2, "0")} ${period}`;
     });
 
-    console.log(slots);
+    // console.log(slots);
     setTimeSlots(slots);
   };
 
@@ -134,7 +134,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
         body: emailHtml,
       })
       .then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         router.replace("/confirmation");
       });
   };
