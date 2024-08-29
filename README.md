@@ -1,5 +1,5 @@
 # 𝑪𝒂𝒍𝒆𝒏𝒅𝒂 – 𝑴𝒆𝒆𝒕𝒊𝒏𝒈 𝑺𝒄𝒉𝒆𝒅𝒖𝒍𝒆 𝑨𝒑𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒐𝒏 🎥📅🗓️ 
-![𝑳𝒊𝒗𝒆 𝒍𝒊𝒏𝒌](https://calendas.vercel.app/)
+[𝑳𝒊𝒗𝒆 𝒍𝒊𝒏𝒌](https://calendas.vercel.app/)
 
 **Calenda** is a powerful web application designed to streamline your scheduling and collaboration. With its intuitive interface and robust features, Calenda makes it easy to manage your appointments, meetings, and events.
 
