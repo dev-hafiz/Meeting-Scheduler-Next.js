@@ -241,7 +241,7 @@ function MeetingTimeDateSelection({ eventInfo, businessInfo }) {
             disabled={!userEmail || !userName}
             onClick={handleScheduleEvent}
           >
-            Schedule
+            {loading ? <LoaderIcon className="animate-spin" /> : "Schedule"}
           </Button>
         )}
       </div>

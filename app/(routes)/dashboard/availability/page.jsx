@@ -38,7 +38,6 @@ const Availability = () => {
   const [endTime, setEndTime] = useState();
   const { user } = useKindeBrowserClient();
 
-  console.log(daysAvailable);
   //firebase database
   const db = getFirestore(app);
 
